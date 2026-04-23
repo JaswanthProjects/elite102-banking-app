@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Banking App</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .btn { background-color: #4CAF50; color: white; padding: 5px 10px; text-decoration: none; border-radius: 3px; }
+        .btn-info { background-color: #2196F3; }
+        .btn-danger { background-color: #f44336; }
+        .btn-warning { background-color: #ff9800; }
+    </style>
+</head>
+<body>
+    <h1>Banking App</h1>
+    <a href="{{ url_for('add_user') }}" class="btn">Add New User</a>
+    <h2>Users</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Balance</th>
+            <th>Actions</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user[0] }}</td>
+            <td>{{ user[1] }}</td>
+            <td>{{ user[2] }}</td>
+            <td>${{ "%.2f"|format(user[3]) }}</td>
+            <td>
+                <a href="{{ url_for('deposit', user_id=user[0]) }}" class="btn btn-info">Deposit</a>
+                <a href="{{ url_for('withdraw', user_id=user[0]) }}" class="btn btn-warning">Withdraw</a>
+                <a href="{{ url_for('update_balance', user_id=user[0]) }}" class="btn btn-warning">Set Balance</a>
+                <a href="{{ url_for('delete_user_route', user_id=user[0]) }}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
